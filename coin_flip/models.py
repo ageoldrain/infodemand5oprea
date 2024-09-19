@@ -13,6 +13,7 @@ class C(BaseConstants):
 class Player(BasePlayer):
     # Player's choice between 'fair' or 'biased' coin
     coin_choice = models.StringField(choices=['fair', 'biased'])
+    chosen_coin = models.StringField()  # Add this field to store the player's chosen coin
 
     # Player's guess for the outcome of both coins
     fair_outcome = models.StringField(choices=['H', 'T'], initial='')
