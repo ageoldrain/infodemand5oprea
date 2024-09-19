@@ -3,7 +3,7 @@ from .models import C
 import random  # Import random for shuffling
 
 P_FAIR = 0.5
-P_BIASED = 0.95  # The probability of heads of the biased coin
+P_BIASED = 0.95  # The probability of heads for the biased coin
 
 class Introduction(Page):
     """
@@ -43,10 +43,8 @@ class ChooseCoin(Page):
     form_fields = ['coin_choice']
 
     def vars_for_template(self):
-        # Ensure the coins are lowercase to match the valid choices
-        coins = ['fair', 'biased']  # Already lowercase to match the model
-
         # Shuffle the order of the coins
+        coins = ['fair', 'biased']
         random.shuffle(coins)
 
         return {
@@ -90,11 +88,13 @@ class ChoosePermutation(Page):
         
         # Check if the player guessed the revealed coin correctly and calculate payoff
         if self.player.chosen_coin == 'fair':
+            # If the player guessed the fair coin correctly, the payoff is based on the biased coin's expected value
             if self.player.fair_outcome == self.player.chosen_coin_result:
-                self.player.total_winnings += P_BIASED * 2  # Payoff based on expected value of biased coin
+                self.player.total_winnings += P_BIASED * 2  # Expected value of biased coin
         elif self.player.chosen_coin == 'biased':
+            # If the player guessed the biased coin correctly, the payoff is based on the fair coin's expected value
             if self.player.biased_outcome == self.player.chosen_coin_result:
-                self.player.total_winnings += P_BIASED * 2  # Payoff based on biased coin probability
+                self.player.total_winnings += P_FAIR * 2  # Expected value of fair coin
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
