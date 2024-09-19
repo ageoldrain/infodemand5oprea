@@ -1,0 +1,131 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?</h2>
+
+    <form method="post">
+        <div class="d-flex justify-content-center mb-3">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                <!-- First Coin -->
+                <label class="btn btn-primary mx-2 coin-label">
+                    <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coins.0 }}" class="coin-input" required>
+                    <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="{{ coins.0 }}" class="coin-image">
+                    <div>{{ coins.0 }}</div>
+                </label>
+
+                <!-- Second Coin -->
+                <label class="btn btn-primary mx-2 coin-label">
+                    <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coins.1 }}" class="coin-input" required>
+                    <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="{{ coins.1 }}" class="coin-image">
+                    <div>{{ coins.1 }}</div>
+                </label>
+            </div>
+        </div>
+
+        {% if form.coin_choice.errors %}
+            <div class="alert alert-danger text-center">
+                {{ form.coin_choice.errors }}
+            </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-center">
+            {% next_button %}
+        </div>
+    </form>
+
+    <!-- Review Instructions Section -->
+    <div class="accordion">Review Instructions</div>
+    <div class="panel">
+        <p>
+            The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), which we will call coin 1, and a biased one (with a high chance of landing heads), which we will call coin 2. You will <b>not</b> be informed of their outcomes automatically.
+        </p>
+        <p>
+            Thus, in each round, two coins will be flipped, and you will not know results.
+        </p>
+        <p> 
+            Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. The first question will ask you which coin (the fair or the biased) you'd like to reveal. Once you choose the coin, the outcome will be revealed to you on the next page. 
+            After that, you will be asked to guess the outcome of <b>both</b> coins.
+        </p>
+        <p>
+            Each coin is "worth" $1. If you guessed correctly in the second question, you will receive $2, $1 for guessing each coin correctly. If not, you will receive $0. You will not, however, see whether you won or not immediately. Your winnings will be revealed only at the end of the 10 rounds.
+        </p>
+        <p>
+            This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
+        </p>
+    </div>
+
+<style>
+    .coin-label {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .coin-input {
+        display: none;
+    }
+    .coin-input:checked + .coin-image {
+        border: 4px solid gold;
+        border-radius: 10px;
+    }
+    .coin-label:hover .coin-image {
+        transform: scale(1.05);
+    }
+    .coin-image {
+        max-width: 200px;
+        transition: border 0.2s, transform 0.2s;
+    }
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .active, .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.coin-label').forEach(label => {
+        label.addEventListener('click', () => {
+            document.querySelectorAll('.coin-label').forEach(lbl => {
+                lbl.classList.remove('active');
+            });
+            label.classList.add('active');
+        });
+    });
+
+    // Accordion functionality for instructions
+    var acc = document.getElementsByClassName("accordion");
+    for (var i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
+
+{% endblock %}
+
+    

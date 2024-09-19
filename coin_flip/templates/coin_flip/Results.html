@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">Earnings</h2>
+    
+    <p class="text-center lead">You have earned: {{ winnings }}!</p>
+    
+    <div class="d-flex justify-content-center my-4">
+        {% next_button %}
+    </div>
+</div>
+{% endblock %}

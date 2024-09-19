@@ -1,0 +1,49 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4">This is round number {{ round_number }}. Please guess the outcome of both coins for this round:</h2>
+
+    
+    <form method="post">
+        <div class="d-flex justify-content-center mb-3">
+            <div class="mx-4 text-center">
+                <h5>Outcome of the Fair Coin</h5>
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="fair_outcome" value="H" required> Heads
+                </label>
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="fair_outcome" value="T" required> Tails
+                </label>
+            </div>
+
+            <div class="mx-4 text-center">
+                <h5>Outcome of the Biased Coin</h5>
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="biased_outcome" value="H" required> Heads
+                </label>
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="biased_outcome" value="T" required> Tails
+                </label>
+            </div>
+        </div>
+        
+        {% if form.fair_outcome.errors %}
+            <div class="alert alert-danger text-center">
+                {{ form.fair_outcome.errors }}
+            </div>
+        {% endif %}
+        
+        {% if form.biased_outcome.errors %}
+            <div class="alert alert-danger text-center">
+                {{ form.biased_outcome.errors }}
+            </div>
+        {% endif %}
+        
+        <div class="d-flex justify-content-center">
+            {% next_button %}
+        </div>
+    </form>
+</div>
+{% endblock %}
