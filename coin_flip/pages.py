@@ -88,24 +88,24 @@ class ChoosePermutation(Page):
         
         # Check if the player guessed the revealed coin correctly and calculate payoff
         if self.player.chosen_coin == 'fair':
-            # If the player guessed the fair coin correctly, the payoff is based on the biased coin's expected value
             if self.player.fair_outcome == self.player.chosen_coin_result:
                 self.player.total_winnings += P_BIASED * 2  # Expected value of biased coin
         elif self.player.chosen_coin == 'biased':
-            # If the player guessed the biased coin correctly, the payoff is based on the fair coin's expected value
             if self.player.biased_outcome == self.player.chosen_coin_result:
                 self.player.total_winnings += P_FAIR * 2  # Expected value of fair coin
 
     def vars_for_template(self):
+        # Define the coin names to use in the template
+        coins = ['Fair Coin', 'Biased Coin']
         return {
             'round_number': self.round_number,
-            'p_biased': P_BIASED,  # Pass the probability of biased coin
-            'p_fair': P_FAIR,      # Pass the probability of fair coin
+            'coins': coins,          # Pass the coin names to the template
+            'p_biased': P_BIASED,    # Pass the probability of biased coin
+            'p_fair': P_FAIR,        # Pass the probability of fair coin
         }
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
-
 
 class Results(Page):
     """
