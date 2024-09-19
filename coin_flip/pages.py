@@ -104,6 +104,7 @@ class ChoosePermutation(Page):
             'round_number': self.round_number
         }
 
+
 class Results(Page):
     """
     Show overall results or feedback.
