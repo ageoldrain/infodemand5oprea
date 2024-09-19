@@ -5,7 +5,6 @@
 <div class="container">
     <h2 class="text-center my-4">This is round number {{ round_number }}. Please guess the outcome of both coins for this round:</h2>
 
-    
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
             <div class="mx-4 text-center">
@@ -28,19 +27,10 @@
                 </label>
             </div>
         </div>
-        
-        {% if form.fair_outcome.errors %}
-            <div class="alert alert-danger text-center">
-                {{ form.fair_outcome.errors }}
-            </div>
-        {% endif %}
-        
-        {% if form.biased_outcome.errors %}
-            <div class="alert alert-danger text-center">
-                {{ form.biased_outcome.errors }}
-            </div>
-        {% endif %}
-        
+
+        <h2 class="text-center my-4">If you correctly guess the outcome of the coin you chose to reveal, you will be paid the expected value - 0.95 * 2 - of this round REGARDLESS of whether you correctly guessed the outcome of the coin you did not choose.</h2>
+
+
         <div class="d-flex justify-content-center">
             {% next_button %}
         </div>
