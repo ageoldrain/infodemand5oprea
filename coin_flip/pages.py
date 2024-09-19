@@ -96,13 +96,15 @@ class ChoosePermutation(Page):
             if self.player.biased_outcome == self.player.chosen_coin_result:
                 self.player.total_winnings += P_FAIR * 2  # Expected value of fair coin
 
-    def is_displayed(self):
-        return self.round_number <= C.NUM_ROUNDS
-
     def vars_for_template(self):
         return {
-            'round_number': self.round_number
+            'round_number': self.round_number,
+            'p_biased': P_BIASED,  # Pass the probability of biased coin
+            'p_fair': P_FAIR,      # Pass the probability of fair coin
         }
+
+    def is_displayed(self):
+        return self.round_number <= C.NUM_ROUNDS
 
 
 class Results(Page):
