@@ -28,7 +28,7 @@ class Introduction2(Page):
 
 class RoundInfo(Page):
     """
-    Page displaying round information
+    Page displaying round information.
     """
     def vars_for_template(self):
         return {
@@ -62,6 +62,7 @@ class ChooseCoin(Page):
     def before_next_page(self):
         # Flip the chosen coin after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+        self.player.chosen_coin = self.player.coin_choice  # Store the chosen coin
 
 class RevealCoinOutcome(Page):
     """
@@ -86,6 +87,14 @@ class ChoosePermutation(Page):
     def before_next_page(self):
         # Combine fair and biased coin outcomes into coin_permutation_choice
         self.player.coin_permutation_choice = f"{self.player.fair_outcome}{self.player.biased_outcome}"
+        
+        # Check if the player guessed the revealed coin correctly and calculate payoff
+        if self.player.chosen_coin == 'fair':
+            if self.player.fair_outcome == self.player.chosen_coin_result:
+                self.player.total_winnings += P_BIASED * 2  # Payoff based on expected value of biased coin
+        elif self.player.chosen_coin == 'biased':
+            if self.player.biased_outcome == self.player.chosen_coin_result:
+                self.player.total_winnings += P_BIASED * 2  # Payoff based on biased coin probability
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
