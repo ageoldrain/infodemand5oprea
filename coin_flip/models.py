@@ -1,6 +1,5 @@
 from otree.api import *
 import numpy as np
-import random
 
 doc = """
 Curiosity and Information Demand
@@ -22,8 +21,6 @@ class Player(BasePlayer):
     # Combined permutation choice and result fields
     coin_permutation_choice = models.StringField(choices=['HH', 'TT', 'HT', 'TH'], initial='')
     chosen_coin_result = models.StringField(initial='')
-    fair_coin_result = models.StringField(initial='')  # Store result for the fair coin
-    biased_coin_result = models.StringField(initial='')  # Store result for the biased coin
     coin_permutation_result = models.StringField(initial='')
 
     total_winnings = models.CurrencyField(initial=cu(0))
@@ -33,21 +30,13 @@ class Player(BasePlayer):
         assert 0 <= p_fair <= 1, "Fair coin probability must be between 0 and 1."
         assert 0 <= p_biased <= 1, "Biased coin probability must be between 0 and 1."
 
-        # Flip the fair and biased coins
-        self.fair_coin_result = 'H' if np.random.rand() < p_fair else 'T'
-        self.biased_coin_result = 'H' if np.random.rand() < p_biased else 'T'
-
-        # Set the chosen coin result based on the player's coin choice
+        # Flip the chosen coin
         if self.coin_choice == 'fair':
-            self.chosen_coin_result = self.fair_coin_result
+            self.chosen_coin_result = 'H' if np.random.rand() < p_fair else 'T'
         elif self.coin_choice == 'biased':
-            self.chosen_coin_result = self.biased_coin_result
+            self.chosen_coin_result = 'H' if np.random.rand() < p_biased else 'T'
 
-        # Combine the coin outcomes for permutation
-        self.coin_permutation_result = f"{self.fair_coin_result}{self.biased_coin_result}"
-
-    # Method to calculate the player's winnings
-    def calculate_winnings(self):
+        # Combine coin outcomes for winnings calculation
         if self.coin_permutation_choice == self.coin_permutation_result:
             self.total_winnings += cu(1)
 
