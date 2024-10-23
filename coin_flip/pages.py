@@ -38,21 +38,29 @@ class RoundInfo(Page):
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
 
+
+class ChooseCoin(Page):
+    form_model = 'player'
+    form_fields = ['coin_choice']
+
+
+
 class ChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
 
     def vars_for_template(self):
-        # Shuffle the order of the coins
-        coins = ['fair', 'biased']
+        # Define coins as a list of tuples (code_name, display_name)
+        coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
-
+        # Store the coin order in participant.vars to access later
+        self.participant.vars['coin_order'] = coins
         return {
             'coins': coins,
-            'fair_left': self.session.vars.get('fair_left', 0),
-            'biased_left': self.session.vars.get('biased_left', 0),
             'round_number': self.round_number
         }
+
+
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
