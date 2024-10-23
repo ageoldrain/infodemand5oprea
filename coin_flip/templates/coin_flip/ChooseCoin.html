@@ -3,7 +3,9 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?</h2>
+    <h2 class="text-center my-4">
+        This is round number {{ round_number }}. The outcome of which coin would you like to reveal?
+    </h2>
 
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
@@ -11,9 +13,9 @@
                 <!-- Loop through the randomized coins list -->
                 {% for coin in coins %}
                     <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coin|lower }}" class="coin-input" required>
-                        <img src="{% static 'coin_flip/CoinImage.png' %}" alt="{{ coin }}" class="coin-image">
-                        <div>{{ coin }}</div>
+                        <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coin.0 }}" class="coin-input" required>
+                        <img src="{% static 'coin_flip/CoinImage.png' %}" alt="{{ coin.1 }}" class="coin-image">
+                        <div>{{ coin.1 }}</div>
                     </label>
                 {% endfor %}
             </div>
