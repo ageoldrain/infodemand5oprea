@@ -50,16 +50,17 @@ class ChooseCoin(Page):
     form_fields = ['coin_choice']
 
     def vars_for_template(self):
-        # Define coins as a list of tuples (code_name, display_name)
+        # Define the coins as a list of tuples (value, display_name)
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
-        random.shuffle(coins)
-        # Store the coin order in participant.vars to access later
-        self.participant.vars['coin_order'] = coins
+        random.shuffle(coins)  # Randomize the coin order
+
+        # Store the coin order in participant.vars to maintain consistency
+        self.participant.vars['coins'] = coins
+
         return {
             'coins': coins,
             'round_number': self.round_number
         }
-
 
 
     def is_displayed(self):
