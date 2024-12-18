@@ -43,8 +43,10 @@
             After that, you will be asked to guess the outcome of <b>both</b> coins.
         </p>
         <p>
-            Each coin is worth $1. If you guess correctly in the second question, you will receive $2 ($1 for each coin guessed correctly). If not, you will receive $0. You will not see whether you won immediately; your winnings will be revealed only at the end of the 10 rounds.
-        </p>
+            Each coin is worth $1. If you correctly guess in the second question the outcome of the coin you chose to reveal, you will be paid the expected value of this round regardless of whether you correctly guessed the outcome of the other coin. 
+       The {{ coins.0 }} has a probability of 0.5 heads, while the {{ coins.1 }} has a probability of {{ p_biased }} heads.</p>
+
+        
         <p>
             This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
         </p>
